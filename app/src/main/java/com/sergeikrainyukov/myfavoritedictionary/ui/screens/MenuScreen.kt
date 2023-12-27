@@ -1,4 +1,4 @@
-package com.sergeikrainyukov.myfavoritedictionary.screens
+package com.sergeikrainyukov.myfavoritedictionary.ui.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
