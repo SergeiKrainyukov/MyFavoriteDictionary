@@ -20,22 +20,33 @@ import com.sergeikrainyukov.myfavoritedictionary.ui.screens.DictionaryScreen
 import com.sergeikrainyukov.myfavoritedictionary.ui.screens.MenuScreen
 import com.sergeikrainyukov.myfavoritedictionary.ui.screens.PracticeScreen
 import com.sergeikrainyukov.myfavoritedictionary.ui.theme.MyFavoriteDictionaryTheme
+import com.sergeikrainyukov.myfavoritedictionary.ui.viewModels.AddWordScreenViewModel
 import com.sergeikrainyukov.myfavoritedictionary.ui.viewModels.PracticeScreenViewModel
 
 class MainActivity : ComponentActivity() {
     private lateinit var practiceScreenViewModel: PracticeScreenViewModel
+    private lateinit var addWordScreenViewModel: AddWordScreenViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        practiceScreenViewModel = ViewModelProvider(this, PracticeScreenViewModelFactory(DbProvider.provideAppDataBase(context = this)))[PracticeScreenViewModel::class.java]
+        practiceScreenViewModel = ViewModelProvider(
+            this,
+            ViewModelFactory(DbProvider.provideAppDataBase(context = this))
+        )[PracticeScreenViewModel::class.java]
+        addWordScreenViewModel = ViewModelProvider(
+            this,
+            ViewModelFactory(DbProvider.provideAppDataBase(context = this))
+        )[AddWordScreenViewModel::class.java]
         setContent {
             MyFavoriteDictionaryTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    App(practiceScreenViewModel = practiceScreenViewModel)
+                    App(
+                        practiceScreenViewModel = practiceScreenViewModel,
+                        addWordScreenViewModel = addWordScreenViewModel
+                    )
                 }
             }
         }
@@ -43,17 +54,20 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun App(practiceScreenViewModel: PracticeScreenViewModel) {
+fun App(
+    practiceScreenViewModel: PracticeScreenViewModel,
+    addWordScreenViewModel: AddWordScreenViewModel
+) {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = "main") {
         composable("main") { MenuScreen(navController) }
-        composable("add_word") { AddWordScreen() }
+        composable("add_word") { AddWordScreen(addWordScreenViewModel, navController) }
         composable("practice") { PracticeScreen(practiceScreenViewModel) }
         composable("dictionary") { DictionaryScreen() }
     }
 }
 
-class PracticeScreenViewModelFactory(
+class ViewModelFactory(
     private val appDatabase: AppDatabase
 ) : ViewModelProvider.Factory {
 
@@ -61,6 +75,10 @@ class PracticeScreenViewModelFactory(
         if (modelClass.isAssignableFrom(PracticeScreenViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
             return PracticeScreenViewModel(appDatabase) as T
+        }
+        if (modelClass.isAssignableFrom(AddWordScreenViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return AddWordScreenViewModel(appDatabase) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
