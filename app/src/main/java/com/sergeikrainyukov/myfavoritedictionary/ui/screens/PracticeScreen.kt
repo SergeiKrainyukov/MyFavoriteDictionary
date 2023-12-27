@@ -23,10 +23,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.sergeikrainyukov.myfavoritedictionary.ui.theme.MyFavoriteDictionaryTheme
 import com.sergeikrainyukov.myfavoritedictionary.ui.viewModels.PracticeScreenViewModel
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -59,7 +57,7 @@ fun CardItem(word: Word) {
     ) {
         Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
             Text(
-                text = if (showEnglish) word.eng else word.rus,
+                text = if (showEnglish) word.en else word.rus,
                 fontSize = 24.sp,
                 textAlign = TextAlign.Center,
                 color = Color.Black
@@ -94,13 +92,4 @@ fun rememberInfinitePagerState(
     return infinitePagerState
 }
 
-data class Word(val eng: String, val rus: String)
-
-
-@Preview(showBackground = true)
-@Composable
-fun BattleScreenPreview() {
-    MyFavoriteDictionaryTheme {
-        PracticeScreen(PracticeScreenViewModel())
-    }
-}
+data class Word(val en: String, val rus: String)
