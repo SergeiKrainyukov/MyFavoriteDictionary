@@ -31,7 +31,7 @@ import com.sergeikrainyukov.myfavoritedictionary.ui.viewModels.PracticeScreenVie
 @Composable
 fun PracticeScreen(viewModel: PracticeScreenViewModel) {
 
-    val words by viewModel.words.observeAsState(initial = emptyList())
+    val words by viewModel.words().observeAsState(initial = emptyList())
 
     val infinitePagerState = rememberInfinitePagerState()
 
