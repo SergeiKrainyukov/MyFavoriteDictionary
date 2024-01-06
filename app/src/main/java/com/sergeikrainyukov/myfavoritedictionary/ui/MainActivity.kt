@@ -48,18 +48,19 @@ class MainActivity : ComponentActivity() {
         )[DictionaryScreenViewModel::class.java]
 
         setContent {
-            MyFavoriteDictionaryTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    App(
-                        practiceScreenViewModel = practiceScreenViewModel,
-                        addWordScreenViewModel = addWordScreenViewModel,
-                        dictionaryScreenViewModel = dictionaryScreenViewModel
-                    )
-                }
-            }
+//            MyFavoriteDictionaryTheme {
+//                Surface(
+//                    modifier = Modifier.fillMaxSize(),
+//                    color = MaterialTheme.colorScheme.background
+//                ) {
+//                    App(
+//                        practiceScreenViewModel = practiceScreenViewModel,
+//                        addWordScreenViewModel = addWordScreenViewModel,
+//                        dictionaryScreenViewModel = dictionaryScreenViewModel
+//                    )
+                    TestScreen2()
+//                }
+//            }
         }
     }
 }
